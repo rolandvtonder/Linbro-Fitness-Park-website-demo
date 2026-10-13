@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+/*
+  Linbro Fitness Park.
+
+  Structure and type follow the Marlin reference: Anybody at wdth 125 as a
+  genuinely wide display face over Manrope for text, on a near-black page
+  with a single accent. The accent is the logo's FITNESS green and the
+  secondary is the star's grey, both sampled from the logo file. The ink is
+  a neutral charcoal rather than Marlin's blue-black, so it matches the
+  logo's own background.
+*/
+@theme {
+  --color-ink: #111214;
+  --color-ink-2: #17181b;
+  --color-panel: #1c1d20;
+  --color-bone: #ffffff;
+  --color-mist: rgba(255, 255, 255, 0.7);
+  --color-lime: #89c13f;
+  --color-lime-hi: #a3d65c;
+  --color-star: #a2a4a6;
+
+  --font-display: "Anybody", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  background: var(--color-ink);
+}
+
+body {
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-lime);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-lime);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Component classes live in a layer so Tailwind utilities can override them
+   (e.g. `hidden sm:inline-flex` on a .btn). */
+@layer components {
+  /* Wide display type. The face is extended by design, not tracked. */
+  .display {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 125, "wght" 800;
+    letter-spacing: -0.01em;
+    line-height: 0.88;
+    color: #fff;
+  }
+
+  .label {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 125, "wght" 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Frosted card over moving footage. */
+  .glass {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 26px 50px -26px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+  }
+
+  /* The sticky frame the stage pins inside. lvh so the backdrop still covers
+     the window when a phone's URL bar slides away. */
+  .stage-frame {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100lvh;
+    overflow: clip;
+  }
+
+  /* ---- buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 125, "wght" 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 120ms ease;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-lime {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+  .btn-lime:hover {
+    background: var(--color-lime-hi);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--color-ink);
+  }
+  .btn-white:hover {
+    background: var(--color-lime);
+  }
+  .btn-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    padding-right: 10px;
+  }
+  .btn-ghost:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .btn-ghost .dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    display: grid;
+    place-items: center;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+  .btn-ghost:hover .dot {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+
+  /* ---- flow sections ---- */
+  .section {
+    position: relative;
+    padding: 112px 24px;
+  }
+  @media (max-width: 767px) {
+    .section {
+      padding: 80px 16px;
+    }
+  }
+  .wrap {
+    max-width: 1248px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-lime);
+  }
+
+  .h2 {
+    font-size: clamp(34px, 5.2vw, 60px);
+    line-height: 1;
+    margin: 20px 0 0;
+    text-wrap: balance;
+  }
+  .h2 em {
+    font-style: italic;
+    font-variation-settings: "wdth" 125, "wght" 400;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  /* the title on each inner page's photo banner */
+  .page-title {
+    font-size: clamp(44px, 8.2vw, 112px);
+    line-height: 0.96;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .page-title em {
+    font-style: italic;
+    font-variation-settings: "wdth" 125, "wght" 400;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .lede {
+    margin: 18px 0 0;
+    max-width: 560px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(34, 36, 40, 0.9) 0%, rgba(23, 24, 27, 0.9) 100%);
+  }
+}
+
+/* ---- skip link ---- */
+.skip {
+  position: fixed;
+  left: 16px;
+  top: -64px;
+  z-index: 100;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--color-lime);
+  color: var(--color-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 160ms ease;
+}
+.skip:focus {
+  top: 16px;
+}
+
+/* The map tile is light by default; invert it into the page's palette. */
+.map-dark {
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.55) brightness(0.95) contrast(0.9);
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+.scroll-cue {
+  animation: scroll-cue 1.8s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .scroll-cue {
+    animation: none;
+  }
+  .btn,
+  .btn .dot {
+    transition: none;
+  }
+}
